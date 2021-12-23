@@ -36,9 +36,14 @@ class Standardizer:
         y_z = (y - self.y_mean) / self.y_std
         return V_z, E_z, y_z
 
-    def inverse(self, V_z: torch.Tensor, E_z: torch.Tensor, y_z: torch.Tensor) -> torch.Tensor:
-        V = V_z * self.V_std + self.V_mean
-        E = E_z * self.E_std + self.E_mean
+    # def inverse(self, V_z: torch.Tensor, E_z: torch.Tensor, y_z: torch.Tensor) -> torch.Tensor:
+    #     V = V_z * self.V_std + self.V_mean
+    #     E = E_z * self.E_std + self.E_mean
+    #     y = y_z * self.y_std + self.y_mean
+    #     return V, E, y
+
+    def inverse_y(self, y_z: torch.Tensor) -> torch.Tensor:
         y = y_z * self.y_std + self.y_mean
-        return V, E, y
+        return y
+        
         

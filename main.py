@@ -7,7 +7,7 @@ import torch_geometric
 from dataset import PBFSimple
 from standardizer import Standardizer
 from network import GNS
-from loss import VectorMSE
+from loss import VectorMSE, Composition
 from learner import Learner
 
 if len(sys.argv) < 2:
@@ -40,6 +40,7 @@ standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader)
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
 criterion = VectorMSE()
+# criterion = Composition(1.0, 1.0, 1.0)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 

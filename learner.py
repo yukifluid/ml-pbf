@@ -41,18 +41,12 @@ class Learner:
 
             graph = Graph(batch.V, batch.E, batch.N)
 
-            # particle = Particle.from_data(batch)
-
             self._optimizer.zero_grad()
 
             pred = self._model(graph)
 
-            # 標準化を戻す操作をして圧縮率誤差を計算
+            loss = self._criterion(pred, batch, self._standardizer)
 
-            # 流体粒子の更新
-            # particle.update_fluid_particle(pred)
-
-            loss = self._criterion(batch.y, pred)
             loss.backward()
             self._optimizer.step()
 
@@ -74,14 +68,9 @@ class Learner:
 
                 graph = Graph(batch.V, batch.E, batch.N)
 
-                # particle = Particle.from_data(batch)
-
                 pred = self._model(graph)
 
-                # 流体粒子の更新
-                # particle.update_fluid_particle(pred)
-
-                loss = self._criterion(batch.y, pred)
+                loss = self._criterion(pred, batch, self._standardizer)
 
                 sum_loss += loss.item()
 
