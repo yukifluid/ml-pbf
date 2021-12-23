@@ -71,5 +71,5 @@ class PBFSimple(torch_geometric.data.Dataset):
         return length
 
     def get(self, i: int) -> torch_geometric.data.Data:
-        data = torch.load(self.processed_path[i])
+        data = torch.load(self.processed_paths[i])
         return data
