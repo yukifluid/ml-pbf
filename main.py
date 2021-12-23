@@ -39,8 +39,10 @@ standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader)
 
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
-criterion = VectorMSE()
-# criterion = Composition(1.0, 1.0, 1.0)
+if len(sys.argv) == 2:
+    criterion = VectorMSE()
+elif len(sys.argv) == 5:
+    criterion = Composition(float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]))
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
