@@ -1,6 +1,7 @@
 import sys
 import random
 import numpy as np
+import matplotlib.pyplot as plt
 import torch
 import torch_geometric
 from dataset import PBFSimple
@@ -47,3 +48,13 @@ train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=10
 
 model_path = f"./model/{sys.argv[1]}.pth"
 torch.save(model.state_dict(), model_path)
+
+epoch = np.arange(len(train_info))
+fig, ax = plt.subplots()
+ax.plot(epoch, train_info.losses, label="train")
+ax.plot(epoch, valid_info.losses, label="valid")
+ax.set_title("learning curve")
+ax.set_xlabel("epoch")
+ax.set_ylabel("loss")
+ax.legend(loc="upper_right")
+plt.savefig(f"./result/{sys.argv[1]}/learning_curve.png")
