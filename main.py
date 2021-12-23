@@ -1,11 +1,17 @@
+import sys
 import random
 import numpy as np
 import torch
 import torch_geometric
 from dataset import PBFSimple
 from standardizer import Standardizer
-from graph import Graph
 from network import GNS
+from loss import VectorMSE
+from learner import Learner
+
+if len(sys.argv) < 2:
+    print("input model name", file=sys.stderr)
+    exit(1)
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
@@ -30,8 +36,14 @@ y_dim = 3
 
 standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader)
 
-model = GNS(V_dim, E_dim, hidden_dim, y_dim)
+model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
-graph = Graph(train_dataset[0].V, train_dataset[0].E, train_dataset[0].N)
+criterion = VectorMSE()
 
-model(graph)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+
+learner = Learner(standardizer, model, criterion, optimizer, device)
+train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=100)
+
+model_path = f"./model/{sys.argv[1]}.pth"
+torch.save(model.state_dict(), model_path)
