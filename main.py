@@ -49,7 +49,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 learner = Learner(standardizer, model, criterion, optimizer, device)
 train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=100)
 
-model_path = f"./model/{sys.argv[1]}.pth"
+model_path = f"./model/{sys.argv[1]}/params.pth"
 torch.save(model.state_dict(), model_path)
 
 epoch = np.arange(len(train_info))
@@ -60,4 +60,4 @@ ax.set_title("learning curve")
 ax.set_xlabel("epoch")
 ax.set_ylabel("loss")
 ax.legend(loc="upper_right")
-plt.savefig(f"./result/{sys.argv[1]}/learning_curve.png")
+plt.savefig(f"./model/{sys.argv[1]}/learning_curve.png")
