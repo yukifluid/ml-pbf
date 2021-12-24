@@ -61,7 +61,7 @@ class PBFSimple(torch_geometric.data.Dataset):
                 r = torch.linalg.norm(r_ij, axis=1)
                 edge_features = torch.cat((r_ij, r.view(-1, 1)), axis=1)
 
-                data = torch_geometric.data.Data(V=vertex_features, E=edge_features, N=edge_index, y=dp, vol=vol, mid_pos=mid_pos, mid_vel=mid_vel, num_boundary_particles=config.num_boundary_particles, rho_0=config.rho_0, h=config.h, dt=config.dt)
+                data = torch_geometric.data.Data(V=vertex_features, E=edge_features, N=edge_index, y=dp, vol=vol, mid_pos=mid_pos, mid_vel=mid_vel, num_boundary_particles=config.num_boundary_particles, rho_0=config.rho_0, h=config.h, dt=config.dt, num_node=config.num_particles)
 
                 torch.save(data, os.path.join(self.processed_paths[idx]))
                 idx += 1
