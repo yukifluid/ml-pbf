@@ -47,7 +47,7 @@ elif len(sys.argv) == 5:
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
 learner = Learner(standardizer, model, criterion, optimizer, device)
-train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=100)
+train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=500)
 
 model_path = f"./model/{sys.argv[1]}/params.pth"
 torch.save(model.state_dict(), model_path)
