@@ -2,16 +2,16 @@ import torch
 import torch_geometric
 
 class Standardizer:
-    def __init__(self, V_dim: int, E_dim: int, y_dim: int, train_loader: torch_geometric.loader.DataLoader) -> None:
+    def __init__(self, V_dim: int, E_dim: int, y_dim: int, train_loader: torch_geometric.loader.DataLoader, device: torch.device) -> None:
         num_batchs = len(train_loader) 
 
-        batch_V_mean = torch.empty((num_batchs, V_dim), dtype=torch.float32) 
-        batch_E_mean = torch.empty((num_batchs, E_dim), dtype=torch.float32) 
-        batch_y_mean = torch.empty((num_batchs, y_dim), dtype=torch.float32) 
+        batch_V_mean = torch.empty((num_batchs, V_dim), dtype=torch.float32).to(device)
+        batch_E_mean = torch.empty((num_batchs, E_dim), dtype=torch.float32).to(device) 
+        batch_y_mean = torch.empty((num_batchs, y_dim), dtype=torch.float32).to(device) 
 
-        batch_V_std = torch.empty((num_batchs, V_dim), dtype=torch.float32) 
-        batch_E_std = torch.empty((num_batchs, E_dim), dtype=torch.float32) 
-        batch_y_std = torch.empty((num_batchs, y_dim), dtype=torch.float32) 
+        batch_V_std = torch.empty((num_batchs, V_dim), dtype=torch.float32).to(device) 
+        batch_E_std = torch.empty((num_batchs, E_dim), dtype=torch.float32).to(device) 
+        batch_y_std = torch.empty((num_batchs, y_dim), dtype=torch.float32).to(device) 
 
         for i, batch in enumerate(train_loader):
             batch_V_mean[i] = torch.mean(batch.V, axis=0) 

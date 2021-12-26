@@ -35,7 +35,7 @@ E_dim = train_dataset[0].E.shape[1]
 hidden_dim = 64
 y_dim = 3
 
-standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader)
+standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
 
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
