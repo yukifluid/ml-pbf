@@ -77,7 +77,7 @@ class SupervisedSimulator:
             edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=False)
             i = edge_index[1] 
             j = edge_index[0]
-            r_ij = self._particlemid_pos[i] - self._particlemid_pos[j]
+            r_ij = self._particle.mid_pos[i] - self._particle.mid_pos[j]
             r = torch.linalg.norm(r_ij, axis=1)
             E = torch.cat((r_ij, r.view(-1, 1)), axis=1)
 
