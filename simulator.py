@@ -9,7 +9,7 @@ from solid import Box
 from particle import Particle
 from calc import calc_density, calc_position_correction, calc_xsph_viscosity, calc_divergence
 
-class SupervisedSImulator:
+class SupervisedSimulator:
     def __init__(self, model, standardizer: Standardizer, device: torch.device) -> None:
         self._model = model
         self._standardizer = standardizer
