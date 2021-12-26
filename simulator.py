@@ -81,8 +81,10 @@ class SupervisedSimulator:
             r = torch.linalg.norm(r_ij, axis=1)
             E = torch.cat((r_ij, r.view(-1, 1)), axis=1)
 
+            z_V, z_E = self._standardizer.standardize_V_E(V, E)
+
             # graph constraction
-            graph = Graph(V, E, edge_index)
+            graph = Graph(z_V, z_E, edge_index)
 
             # delta position
             y = self._model(graph)

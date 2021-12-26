@@ -22,19 +22,24 @@ class Standardizer:
             batch_E_std[i] = torch.std(batch.E, axis=0) 
             batch_y_std[i] = torch.std(batch.y, axis=0) 
 
-        self.V_mean = torch.mean(batch_V_mean)
-        self.E_mean = torch.mean(batch_E_mean)
-        self.y_mean = torch.mean(batch_y_mean)
+        self.V_mean = torch.mean(batch_V_mean, axis=0)
+        self.E_mean = torch.mean(batch_E_mean, axis=0)
+        self.y_mean = torch.mean(batch_y_mean, axis=0)
 
-        self.V_std = torch.mean(batch_V_std)
-        self.E_std = torch.mean(batch_E_std)
-        self.y_std = torch.mean(batch_y_std)
+        self.V_std = torch.mean(batch_V_std, axis=0)
+        self.E_std = torch.mean(batch_E_std, axis=0)
+        self.y_std = torch.mean(batch_y_std, axis=0)
 
     def standardize(self, V: torch.Tensor, E: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         V_z = (V - self.V_mean) / self.V_std
         E_z = (E - self.E_mean) / self.E_std
         y_z = (y - self.y_mean) / self.y_std
         return V_z, E_z, y_z
+
+    def standardize_V_E(self, V: torch.Tensor, E: torch.Tensor) -> torch.Tensor:
+        V_z = (V - self.V_mean) / self.V_std
+        E_z = (E - self.E_mean) / self.E_std
+        return V_z, E_z
 
     # def inverse(self, V_z: torch.Tensor, E_z: torch.Tensor, y_z: torch.Tensor) -> torch.Tensor:
     #     V = V_z * self.V_std + self.V_mean
