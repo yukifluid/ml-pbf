@@ -37,11 +37,11 @@ class Learner:
         for batch in train_loader:
             batch = batch.to(self._device)
 
+            self._optimizer.zero_grad()
+
             batch.V, batch.E, batch.y = self._standardizer.standardize(batch.V, batch.E, batch.y)
 
             graph = Graph(batch.V, batch.E, batch.N)
-
-            self._optimizer.zero_grad()
 
             pred = self._model(graph)
 

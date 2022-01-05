@@ -9,7 +9,7 @@ class VectorMSE(torch.nn.Module):
         super().__init__()
 
     def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data, standardizer: Standardizer) -> torch.Tensor:
-        loss = torch.mean(torch.sum((batch.y-pred)**2, axis=1))
+        loss = torch.mean(torch.sum((batch.y-pred)**2, axis=1)) + 10.0*torch.mean(batch.y**2)
         return loss
 
 class Composition(torch.nn.Module):
