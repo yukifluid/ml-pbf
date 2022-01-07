@@ -1,3 +1,4 @@
+from os import statvfs_result
 import sys
 import random
 import numpy as np
@@ -39,7 +40,7 @@ E_dim = train_dataset[0].E.shape[1]
 hidden_dim = 64
 y_dim = 3
 
-# standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
+standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
 
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
@@ -50,9 +51,9 @@ elif len(sys.argv) == 5:
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-# learner = Learner(standardizer, model, criterion, optimizer, device)
-learner = Learner(model, criterion, optimizer, device)
-train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=10)
+learner = Learner(standardizer, model, criterion, optimizer, device)
+# learner = Learner(model, criterion, optimizer, device)
+train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=300)
 
 model_path = f"./model/{sys.argv[1]}/params.pth"
 torch.save(model.state_dict(), model_path)

@@ -7,16 +7,16 @@ class Encoder(torch.nn.Module):
         super().__init__()
 
         self.V_mlp = torch.nn.Sequential(
-            torch.nn.Linear(V_dim     , hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
+            torch.nn.Linear(V_dim     , hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
             torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LayerNorm(hidden_dim)
         )
 
         self.E_mlp = torch.nn.Sequential(
-            torch.nn.Linear(E_dim     , hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
+            torch.nn.Linear(E_dim     , hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
             torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LayerNorm(hidden_dim)
         )
 
@@ -33,16 +33,16 @@ class Processor(torch_geometric.nn.MessagePassing):
         super().__init__(aggr="add")
 
         self.message_mlp = torch.nn.Sequential(
-            torch.nn.Linear(3*hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.ReLU(),
+            torch.nn.Linear(3*hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LeakyReLU(),
             torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LayerNorm(hidden_dim)
         )
 
         self.update_mlp = torch.nn.Sequential(
-            torch.nn.Linear(2*hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.ReLU(),
+            torch.nn.Linear(2*hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LeakyReLU(),
             torch.nn.Linear(hidden_dim  , hidden_dim), torch.nn.LayerNorm(hidden_dim)
         )
 
@@ -67,9 +67,9 @@ class Decoder(torch.nn.Module):
         super().__init__()
 
         self.V_mlp = torch.nn.Sequential(
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
-            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.ReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
+            torch.nn.Linear(hidden_dim, hidden_dim), torch.nn.LeakyReLU(),
             torch.nn.Linear(hidden_dim, out_dim)
         )
 

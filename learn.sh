@@ -66,11 +66,13 @@
 # cp -r ./PBFSimple/raw /g/マイドライブ/lab/ml-pbf-result-20201226
 
 
-mkdir ./model/no-starndardization-0108
-python3 main.py no-starndardization-0108 > ./model/no-starndardization-0108/log.txt
-# cp -r ./model/no-starndardization-0108 /g/マイドライブ/lab/ml-pbf-result-20201226
-python3 simulate.py no-starndardization-0108 PBFSimple/raw/test/0/config.json PBFSimple/raw/test/0/tanh-data.csv PBFSimple/raw/test/0/tanh-measure.csv
-python3 simulate.py no-starndardization-0108 PBFSimple/raw/test/1/config.json PBFSimple/raw/test/1/tanh-data.csv PBFSimple/raw/test/1/tanh-measure.csv
-python3 simulate.py no-starndardization-0108 PBFSimple/raw/test/2/config.json PBFSimple/raw/test/2/tanh-data.csv PBFSimple/raw/test/2/tanh-measure.csv
-python3 simulate.py no-starndardization-0108 PBFSimple/raw/test/3/config.json PBFSimple/raw/test/3/tanh-data.csv PBFSimple/raw/test/3/tanh-measure.csv
-python3 simulate.py no-starndardization-0108 PBFSimple/raw/test/4/config.json PBFSimple/raw/test/4/tanh-data.csv PBFSimple/raw/test/4/tanh-measure.csv
+mkdir ./model/std-leacky-relu2
+python main.py std-leacky-relu2 > ./model/std-leacky-relu2/log.txt
+# cp -r ./model/std-leacky-relu2 /g/マイドライブ/lab/ml-pbf-result-20201226
+python simulate.py std-leacky-relu2 Simple3D/raw/test/0/config.json Simple3D/raw/test/0/std-leacky-relu2-data.csv Simple3D/raw/test/0/std-leacky-relu2-measure.csv
+python simulate.py std-leacky-relu2 Simple3D/raw/test/1/config.json Simple3D/raw/test/1/std-leacky-relu2-data.csv Simple3D/raw/test/1/std-leacky-relu2-measure.csv
+python simulate.py std-leacky-relu2 Simple3D/raw/test/2/config.json Simple3D/raw/test/2/std-leacky-relu2-data.csv Simple3D/raw/test/2/std-leacky-relu2-measure.csv
+python simulate.py std-leacky-relu2 Simple3D/raw/test/3/config.json Simple3D/raw/test/3/std-leacky-relu2-data.csv Simple3D/raw/test/3/std-leacky-relu2-measure.csv
+python simulate.py std-leacky-relu2 Simple3D/raw/test/4/config.json Simple3D/raw/test/4/std-leacky-relu2-data.csv Simple3D/raw/test/4/std-leacky-relu2-measure.csv
+
+cp -r ./Simple3D/raw/test /g/マイドライブ/lab/ml-pbf-result-20201226/Simple3D

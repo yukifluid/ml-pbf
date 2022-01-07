@@ -16,11 +16,11 @@ class Standardizer:
         for i, batch in enumerate(train_loader):
             batch_V_mean[i] = torch.mean(batch.V, axis=0) 
             batch_E_mean[i] = torch.mean(batch.E, axis=0) 
-            batch_y_mean[i] = torch.mean(batch.y, axis=0) 
+            batch_y_mean[i] = torch.mean(batch.y[batch.num_boundary_particles:], axis=0) 
 
             batch_V_std[i] = torch.std(batch.V, axis=0) 
             batch_E_std[i] = torch.std(batch.E, axis=0) 
-            batch_y_std[i] = torch.std(batch.y, axis=0) 
+            batch_y_std[i] = torch.std(batch.y[batch.num_boundary_particles:], axis=0) 
 
         self.V_mean = torch.mean(batch_V_mean, axis=0)
         self.E_mean = torch.mean(batch_E_mean, axis=0)

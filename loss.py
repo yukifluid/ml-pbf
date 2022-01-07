@@ -10,12 +10,16 @@ class VectorMSE(torch.nn.Module):
 
     # 流体粒子のみで損失を計算
     # def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data, standardizer: Standardizer) -> torch.Tensor:
-    #     loss = torch.mean(torch.pow(batch.y[batch.num_boundary_particles:]-pred[batch.num_boundary_particles:], 2.0))
+    #     loss = torch.mean(torch.sum(torch.pow(batch.y[batch.num_boundary_particles:]-pred[batch.num_boundary_particles:], 2.0), axis=1))
     #     return loss
 
-    def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data) -> torch.Tensor:
-        loss = torch.mean(torch.sum(torch.pow(batch.y[batch.num_boundary_particles:] - pred[batch.num_boundary_particles:], 2.0), axis=1))
+    def forward(self, pred: torch.Tensor, y, standardizer: Standardizer) -> torch.Tensor:
+        loss = torch.mean(torch.pow(y-pred, 2.0))
         return loss
+
+    # def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data) -> torch.Tensor:
+    #     loss = torch.mean(torch.sum(torch.pow(batch.y[batch.num_boundary_particles:] - pred[batch.num_boundary_particles:], 2.0), axis=1))
+    #     return loss
 
 class Composition(torch.nn.Module):
     def __init__(self, alpha: float, beta: float, gamma: float):

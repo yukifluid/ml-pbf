@@ -11,6 +11,7 @@ from calc import calc_density, calc_xsph_viscosity, calc_divergence
 
 class SupervisedSimulator:
     def __init__(self, model, standardizer: Standardizer, device: torch.device) -> None:
+    # def __init__(self, model, device: torch.device) -> None:
         self._model = model
         self._standardizer = standardizer
         self._device = device
@@ -83,16 +84,16 @@ class SupervisedSimulator:
             r = torch.linalg.norm(r_ij, axis=1)
             E = torch.cat((r_ij, r.view(-1, 1)), axis=1)
 
-            # z_V, z_E = self._standardizer.standardize_V_E(V, E)
+            z_V, z_E = self._standardizer.standardize_V_E(V, E)
 
             # graph constraction
-            # graph = Graph(z_V, z_E, edge_index)
-            graph = Graph(V, E, edge_index)
+            graph = Graph(z_V, z_E, edge_index)
+            # graph = Graph(V, E, edge_index)
 
             # delta position
-            # y = self._model(graph)
-            # dp = self._standardizer.inverse_y(y)
-            dp = self._model(graph)
+            y = self._model(graph)
+            dp = self._standardizer.inverse_y(y)
+            # dp = self._model(graph)
             self._particle.f_next_pos += dp[self._config.num_boundary_particles:]
             self._particle.f_next_pos = self._solid.respond(self._particle.f_next_pos)
 
