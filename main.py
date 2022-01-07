@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 import torch_geometric
-from dataset import PBFSimple
+from dataset import PBFSimple, Simple3D
 from standardizer import Standardizer
 from network import GNS
 from loss import VectorMSE, Composition
@@ -22,9 +22,13 @@ np.random.seed(SEED)
 torch.manual_seed(SEED)
 torch.cuda.manual_seed(SEED)
 
-train_dataset = PBFSimple(dataset_type="train")
-valid_dataset = PBFSimple(dataset_type="valid")
-test_dataset  = PBFSimple(dataset_type="test")
+# train_dataset = PBFSimple(dataset_type="train")
+# valid_dataset = PBFSimple(dataset_type="valid")
+# test_dataset  = PBFSimple(dataset_type="test")
+
+train_dataset = Simple3D(dataset_type="train")
+valid_dataset = Simple3D(dataset_type="valid")
+test_dataset  = Simple3D(dataset_type="test")
 
 train_loader = torch_geometric.loader.DataLoader(train_dataset, batch_size=1, shuffle=True)
 valid_loader = torch_geometric.loader.DataLoader(valid_dataset, batch_size=1, shuffle=False)
@@ -35,7 +39,7 @@ E_dim = train_dataset[0].E.shape[1]
 hidden_dim = 64
 y_dim = 3
 
-standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
+# standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
 
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
@@ -46,8 +50,9 @@ elif len(sys.argv) == 5:
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-learner = Learner(standardizer, model, criterion, optimizer, device)
-train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=500)
+# learner = Learner(standardizer, model, criterion, optimizer, device)
+learner = Learner(model, criterion, optimizer, device)
+train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=10)
 
 model_path = f"./model/{sys.argv[1]}/params.pth"
 torch.save(model.state_dict(), model_path)

@@ -5,8 +5,9 @@ from learning_info import LearningInfo
 from graph import Graph
 
 class Learner:
-    def __init__(self, standardizer, model, criterion, optimizer, device: torch.device) -> None:
-        self._standardizer = standardizer
+    # def __init__(self, standardizer, model, criterion, optimizer, device: torch.device) -> None:
+    def __init__(self, model, criterion, optimizer, device: torch.device) -> None:
+        # self._standardizer = standardizer
         self._model        = model
         self._criterion    = criterion
         self._optimizer    = optimizer
@@ -25,7 +26,7 @@ class Learner:
             epoch_end_time_s = time.time()
             epoch_elapsed_time_m = (epoch_end_time_s - epoch_start_time_s) / 60
 
-            print(self._epoch_log(epoch, num_epochs, train_info, valid_info, epoch_elapsed_time_m))
+            print(self._epoch_log(epoch, num_epochs, train_info, valid_info, epoch_elapsed_time_m), flush=True)
 
         return train_info, valid_info
 
@@ -37,15 +38,16 @@ class Learner:
         for batch in train_loader:
             batch = batch.to(self._device)
 
-            self._optimizer.zero_grad()
-
-            batch.V, batch.E, batch.y = self._standardizer.standardize(batch.V, batch.E, batch.y)
+            # batch.V, batch.E, batch.y = self._standardizer.standardize(batch.V, batch.E, batch.y)
 
             graph = Graph(batch.V, batch.E, batch.N)
 
+            self._optimizer.zero_grad()
+
             pred = self._model(graph)
 
-            loss = self._criterion(pred, batch, self._standardizer)
+            # loss = self._criterion(pred, batch, self._standardizer)
+            loss = self._criterion(pred, batch)
 
             loss.backward()
             self._optimizer.step()
@@ -54,7 +56,8 @@ class Learner:
 
         avg_loss = sum_loss / len(train_loader)
 
-        info.append(avg_loss)
+        # info.append(avg_loss, torch.mean(torch.abs(self._standardizer.inverse_y(pred[batch.num_boundary_particles:]))).item())
+        info.append(avg_loss, torch.mean(torch.abs(pred[batch.num_boundary_particles:])).item())
 
     def valid(self, valid_loader: torch_geometric.loader.DataLoader, info: LearningInfo) -> None:
         self._model.eval()
@@ -64,19 +67,21 @@ class Learner:
         with torch.no_grad():
             for batch in valid_loader:
                 batch = batch.to(self._device)
-                batch.V, batch.E, batch.y = self._standardizer.standardize(batch.V, batch.E, batch.y)
+                # batch.V, batch.E, batch.y = self._standardizer.standardize(batch.V, batch.E, batch.y)
 
                 graph = Graph(batch.V, batch.E, batch.N)
 
                 pred = self._model(graph)
 
-                loss = self._criterion(pred, batch, self._standardizer)
+                # loss = self._criterion(pred, batch, self._standardizer)
+                loss = self._criterion(pred, batch)
 
                 sum_loss += loss.item()
 
             avg_loss = sum_loss / len(valid_loader)
 
-            info.append(avg_loss)
+            # info.append(avg_loss, torch.mean(torch.abs(self._standardizer.inverse_y(pred[batch.num_boundary_particles:]))).item())
+            info.append(avg_loss, torch.mean(torch.abs(pred[batch.num_boundary_particles:])).item())
 
     def test(self):
         self.model.eval()
@@ -84,6 +89,6 @@ class Learner:
             pass
 
     def _epoch_log(self, epoch: int, num_epochs: int, train_info: LearningInfo, valid_info: LearningInfo, epoch_elapsed: float) -> str:
-        log = "epoch: {:5d}/{:5d} | train_loss: {:.10f} | valid_loss: {:.10f} | elapsed: {:.3f} min" \
-            .format(epoch, num_epochs, train_info.losses[-1], valid_info.losses[-1], epoch_elapsed)
+        log = "epoch: {:5d}/{:5d} | train_loss: {:.10f} | train_dp: {:.10f} | valid_loss: {:.10f} | valid_dp: {:.10f} | elapsed: {:.3f} min" \
+            .format(epoch, num_epochs, train_info.losses[epoch], train_info.dp_abs[epoch], valid_info.losses[epoch], valid_info.dp_abs[epoch], epoch_elapsed)
         return log

@@ -92,9 +92,9 @@ class GNS(torch.nn.Module):
     def forward(self, graph: Graph) -> torch.Tensor:
         latent_graph = self.encoder(graph) 
 
-        latent_graph += self.processor1(latent_graph)
-        latent_graph += self.processor2(latent_graph)
-        latent_graph += self.processor3(latent_graph)
+        latent_graph = latent_graph + self.processor1(latent_graph)
+        latent_graph = latent_graph + self.processor2(latent_graph)
+        latent_graph = latent_graph + self.processor3(latent_graph)
 
         out = self.decoder(latent_graph)
         return out

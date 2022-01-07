@@ -69,10 +69,11 @@ class SupervisedSimulator:
             self._particle.mid_pos = self._particle.next_pos.clone()
 
             # vertex features
-            edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=True)
-            m = self._config.rho_0 * self._particle.vol
-            rho = calc_density(self._config.rho_0, self._config.h, self._particle.vol, self._particle.mid_pos, edge_index)
-            V = torch.cat((m.view(-1, 1), rho.view(-1, 1), self._particle.mid_vel), axis=1)
+            # edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=True)
+            # m = self._config.rho_0 * self._particle.vol
+            # rho = calc_density(self._config.rho_0, self._config.h, self._particle.vol, self._particle.mid_pos, edge_index)
+            # V = torch.cat((m.view(-1, 1), rho.view(-1, 1), self._particle.mid_vel), axis=1)
+            V = self._particle.vol.view(-1, 1)
 
             # edge features
             edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=False)
@@ -82,14 +83,16 @@ class SupervisedSimulator:
             r = torch.linalg.norm(r_ij, axis=1)
             E = torch.cat((r_ij, r.view(-1, 1)), axis=1)
 
-            z_V, z_E = self._standardizer.standardize_V_E(V, E)
+            # z_V, z_E = self._standardizer.standardize_V_E(V, E)
 
             # graph constraction
-            graph = Graph(z_V, z_E, edge_index)
+            # graph = Graph(z_V, z_E, edge_index)
+            graph = Graph(V, E, edge_index)
 
             # delta position
-            y = self._model(graph)
-            dp = self._standardizer.inverse_y(y)
+            # y = self._model(graph)
+            # dp = self._standardizer.inverse_y(y)
+            dp = self._model(graph)
             self._particle.f_next_pos += dp[self._config.num_boundary_particles:]
             self._particle.f_next_pos = self._solid.respond(self._particle.f_next_pos)
 
