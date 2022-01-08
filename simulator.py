@@ -70,11 +70,11 @@ class SupervisedSimulator:
             self._particle.mid_pos = self._particle.next_pos.clone()
 
             # vertex features
-            # edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=True)
-            # m = self._config.rho_0 * self._particle.vol
-            # rho = calc_density(self._config.rho_0, self._config.h, self._particle.vol, self._particle.mid_pos, edge_index)
+            edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=True)
+            m = self._config.rho_0 * self._particle.vol
+            rho = calc_density(self._config.rho_0, self._config.h, self._particle.vol, self._particle.mid_pos, edge_index)
             # V = torch.cat((m.view(-1, 1), rho.view(-1, 1), self._particle.mid_vel), axis=1)
-            V = self._particle.vol.view(-1, 1)
+            V = torch.cat((self._particle.vol.view(-1, 1), rho.view(-1, 1)), axis=1)
 
             # edge features
             edge_index = radius_graph(self._particle.mid_pos, self._config.h, loop=False)

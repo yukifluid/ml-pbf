@@ -24,7 +24,7 @@ train_dataset = Simple3D(dataset_type="train")
 train_loader = torch_geometric.loader.DataLoader(train_dataset, batch_size=1, shuffle=True)
 
 # V_dim = train_dataset[0].V.shape[1]
-V_dim = 1
+V_dim = 2
 # E_dim = train_dataset[0].E.shape[1]
 E_dim = 4
 hidden_dim = 64

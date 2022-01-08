@@ -66,13 +66,31 @@
 # cp -r ./PBFSimple/raw /g/マイドライブ/lab/ml-pbf-result-20201226
 
 
-mkdir ./model/std-leacky-relu2
-python main.py std-leacky-relu2 > ./model/std-leacky-relu2/log.txt
-# cp -r ./model/std-leacky-relu2 /g/マイドライブ/lab/ml-pbf-result-20201226
-python simulate.py std-leacky-relu2 Simple3D/raw/test/0/config.json Simple3D/raw/test/0/std-leacky-relu2-data.csv Simple3D/raw/test/0/std-leacky-relu2-measure.csv
-python simulate.py std-leacky-relu2 Simple3D/raw/test/1/config.json Simple3D/raw/test/1/std-leacky-relu2-data.csv Simple3D/raw/test/1/std-leacky-relu2-measure.csv
-python simulate.py std-leacky-relu2 Simple3D/raw/test/2/config.json Simple3D/raw/test/2/std-leacky-relu2-data.csv Simple3D/raw/test/2/std-leacky-relu2-measure.csv
-python simulate.py std-leacky-relu2 Simple3D/raw/test/3/config.json Simple3D/raw/test/3/std-leacky-relu2-data.csv Simple3D/raw/test/3/std-leacky-relu2-measure.csv
-python simulate.py std-leacky-relu2 Simple3D/raw/test/4/config.json Simple3D/raw/test/4/std-leacky-relu2-data.csv Simple3D/raw/test/4/std-leacky-relu2-measure.csv
+mkdir ./model/std-leacky-relu3-1.0
+python main.py std-leacky-relu3-1.0 1.0 > ./model/std-leacky-relu3-1.0/log.txt
+# cp -r ./model/std-leacky-relu3-1.0 /g/マイドライブ/lab/ml-pbf-result-20201226
+python simulate.py std-leacky-relu3-1.0 Simple3D/raw/test/0/config.json Simple3D/raw/test/0/std-leacky-relu3-1.0-data.csv Simple3D/raw/test/0/std-leacky-relu3-1.0-measure.csv
+python simulate.py std-leacky-relu3-1.0 Simple3D/raw/test/1/config.json Simple3D/raw/test/1/std-leacky-relu3-1.0-data.csv Simple3D/raw/test/1/std-leacky-relu3-1.0-measure.csv
+python simulate.py std-leacky-relu3-1.0 Simple3D/raw/test/2/config.json Simple3D/raw/test/2/std-leacky-relu3-1.0-data.csv Simple3D/raw/test/2/std-leacky-relu3-1.0-measure.csv
+python simulate.py std-leacky-relu3-1.0 Simple3D/raw/test/3/config.json Simple3D/raw/test/3/std-leacky-relu3-1.0-data.csv Simple3D/raw/test/3/std-leacky-relu3-1.0-measure.csv
+python simulate.py std-leacky-relu3-1.0 Simple3D/raw/test/4/config.json Simple3D/raw/test/4/std-leacky-relu3-1.0-data.csv Simple3D/raw/test/4/std-leacky-relu3-1.0-measure.csv
+
+mkdir ./model/std-leacky-relu3-5.0
+python main.py std-leacky-relu3-5.0 5.0 > ./model/std-leacky-relu3-5.0/log.txt
+# cp -r ./model/std-leacky-relu3-5.0 /g/マイドライブ/lab/ml-pbf-result-20201226
+python simulate.py std-leacky-relu3-5.0 Simple3D/raw/test/0/config.json Simple3D/raw/test/0/std-leacky-relu3-5.0-data.csv Simple3D/raw/test/0/std-leacky-relu3-5.0-measure.csv
+python simulate.py std-leacky-relu3-5.0 Simple3D/raw/test/1/config.json Simple3D/raw/test/1/std-leacky-relu3-5.0-data.csv Simple3D/raw/test/1/std-leacky-relu3-5.0-measure.csv
+python simulate.py std-leacky-relu3-5.0 Simple3D/raw/test/2/config.json Simple3D/raw/test/2/std-leacky-relu3-5.0-data.csv Simple3D/raw/test/2/std-leacky-relu3-5.0-measure.csv
+python simulate.py std-leacky-relu3-5.0 Simple3D/raw/test/3/config.json Simple3D/raw/test/3/std-leacky-relu3-5.0-data.csv Simple3D/raw/test/3/std-leacky-relu3-5.0-measure.csv
+python simulate.py std-leacky-relu3-5.0 Simple3D/raw/test/4/config.json Simple3D/raw/test/4/std-leacky-relu3-5.0-data.csv Simple3D/raw/test/4/std-leacky-relu3-5.0-measure.csv
+
+mkdir ./model/std-leacky-relu3-10.0
+python main.py std-leacky-relu3-10.0 10.0 > ./model/std-leacky-relu3-10.0/log.txt
+# cp -r ./model/std-leacky-relu3-10.0 /g/マイドライブ/lab/ml-pbf-result-20201226
+python simulate.py std-leacky-relu3-10.0 Simple3D/raw/test/0/config.json Simple3D/raw/test/0/std-leacky-relu3-10.0-data.csv Simple3D/raw/test/0/std-leacky-relu3-10.0-measure.csv
+python simulate.py std-leacky-relu3-10.0 Simple3D/raw/test/1/config.json Simple3D/raw/test/1/std-leacky-relu3-10.0-data.csv Simple3D/raw/test/1/std-leacky-relu3-10.0-measure.csv
+python simulate.py std-leacky-relu3-10.0 Simple3D/raw/test/2/config.json Simple3D/raw/test/2/std-leacky-relu3-10.0-data.csv Simple3D/raw/test/2/std-leacky-relu3-10.0-measure.csv
+python simulate.py std-leacky-relu3-10.0 Simple3D/raw/test/3/config.json Simple3D/raw/test/3/std-leacky-relu3-10.0-data.csv Simple3D/raw/test/3/std-leacky-relu3-10.0-measure.csv
+python simulate.py std-leacky-relu3-10.0 Simple3D/raw/test/4/config.json Simple3D/raw/test/4/std-leacky-relu3-10.0-data.csv Simple3D/raw/test/4/std-leacky-relu3-10.0-measure.csv
 
 cp -r ./Simple3D/raw/test /g/マイドライブ/lab/ml-pbf-result-20201226/Simple3D

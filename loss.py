@@ -13,8 +13,8 @@ class VectorMSE(torch.nn.Module):
     #     loss = torch.mean(torch.sum(torch.pow(batch.y[batch.num_boundary_particles:]-pred[batch.num_boundary_particles:], 2.0), axis=1))
     #     return loss
 
-    def forward(self, pred: torch.Tensor, y, standardizer: Standardizer) -> torch.Tensor:
-        loss = torch.mean(torch.pow(y-pred, 2.0))
+    def forward(self, pred: torch.Tensor, y, c, standardizer: Standardizer) -> torch.Tensor:
+        loss = torch.mean(torch.pow(y-pred, 2.0)) + c * torch.mean(torch.abs(pred))
         return loss
 
     # def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data) -> torch.Tensor:

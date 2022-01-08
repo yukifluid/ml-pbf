@@ -44,16 +44,18 @@ standardizer = Standardizer(V_dim, E_dim, y_dim, train_loader, device)
 
 model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
-if len(sys.argv) == 2:
-    criterion = VectorMSE()
-elif len(sys.argv) == 5:
-    criterion = Composition(float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]))
+# if len(sys.argv) == 2:
+#     criterion = VectorMSE()
+# elif len(sys.argv) == 5:
+#     criterion = Composition(float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]))
+
+criterion = VectorMSE(sys.argv[2])
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
 learner = Learner(standardizer, model, criterion, optimizer, device)
 # learner = Learner(model, criterion, optimizer, device)
-train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=300)
+train_info, valid_info = learner.learn(train_loader, valid_loader, num_epochs=20)
 
 model_path = f"./model/{sys.argv[1]}/params.pth"
 torch.save(model.state_dict(), model_path)
