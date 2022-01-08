@@ -51,7 +51,7 @@ model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 
 criterion = VectorMSE(sys.argv[2])
 
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.00003)
 
 learner = Learner(standardizer, model, criterion, optimizer, device)
 # learner = Learner(model, criterion, optimizer, device)
