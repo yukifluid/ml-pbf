@@ -5,16 +5,19 @@ from standardizer import Standardizer
 from calc import calc_density, calc_divergence
 
 class VectorMSE(torch.nn.Module):
-    def __init__(self) -> None:
+    # def __init__(self) -> None:
+    #     super().__init__()
+    def __init__(self, c) -> None:
         super().__init__()
+        self.c = c
 
     # 流体粒子のみで損失を計算
     # def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data, standardizer: Standardizer) -> torch.Tensor:
     #     loss = torch.mean(torch.sum(torch.pow(batch.y[batch.num_boundary_particles:]-pred[batch.num_boundary_particles:], 2.0), axis=1))
     #     return loss
 
-    def forward(self, pred: torch.Tensor, y, c, standardizer: Standardizer) -> torch.Tensor:
-        loss = torch.mean(torch.pow(y-pred, 2.0)) + c * torch.mean(torch.abs(pred))
+    def forward(self, pred: torch.Tensor, y, standardizer: Standardizer) -> torch.Tensor:
+        loss = torch.mean(torch.pow(y-pred, 2.0)) + self.c * torch.mean(torch.abs(pred))
         return loss
 
     # def forward(self, pred: torch.Tensor, batch: torch_geometric.data.Data) -> torch.Tensor:

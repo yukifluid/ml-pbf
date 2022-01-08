@@ -49,7 +49,7 @@ model = GNS(V_dim, E_dim, hidden_dim, y_dim).to(device)
 # elif len(sys.argv) == 5:
 #     criterion = Composition(float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]))
 
-criterion = VectorMSE(sys.argv[2])
+criterion = VectorMSE(float(sys.argv[2]))
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.00003)
 
